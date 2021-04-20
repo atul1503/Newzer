@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from HelloDjango.views import hello
+from HelloDjango.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),path('*hello*',hello)
+    path('admin/', admin.site.urls),path('hello/',hello),
+    path('',homepage),path('dick/vagina',vagina)
 ]
