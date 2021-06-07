@@ -11,13 +11,15 @@ font-size:0.8em;
 <center>
 <table>
 <tr>
+<td>Publication date</td>
 <td>Photo</td>
 <td>HeadLine</td>
 <td>Link</td>
 </tr>
 {% for i in articles %}
 <tr>
-<td><img style="height:100px;width:200px" src="{{i.urlToImage}}"></td>
+<td>{{i.publishedAt}}</td>
+<td><img style="height:200px;width:400px" src="{{i.urlToImage}}"></td>
 <td>{{i.title}}</td>
 <td><a href="{{i.url}}">Click for full article</a></td>
 </tr>
