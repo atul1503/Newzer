@@ -1,7 +1,14 @@
 <html>
 <title>News for ya!</title>
+<style>
+td{
+text-align:center;
+font-size:0.8em;
+}
+</style>
 <body>
-{ % if %}
+{% if articles %}
+<center>
 <table>
 <tr>
 <td>Photo</td>
@@ -10,11 +17,13 @@
 </tr>
 {% for i in articles %}
 <tr>
-<td><img src="{{i.urlToImage}}"></td>
+<td><img style="height:100px;width:200px" src="{{i.urlToImage}}"></td>
 <td>{{i.title}}</td>
-<td><a href="{{i.url}}"></a></td>
-{%endfor%}
+<td><a href="{{i.url}}">Click for full article</a></td>
+</tr>
+{% endfor %}
 </table> 
+</center>
 {% else %}
 <center><p> No news right now </p></center>
 {% endif %}
