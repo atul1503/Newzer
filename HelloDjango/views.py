@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 import requests as r
-from django.template import loader
+from django.shortcuts import render
 import json
 
 
@@ -16,10 +16,9 @@ def news(request):
     url="https://newsapi.org/v2/everything?q="+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
-    template_obj=loader.get_template('news.html')
     context={
     'articles':json_obj['articles']
     }
-    return HttpResponse(
-        template_obj.render(context)
-        )
+    return render(
+    request,'news.html',context
+    )
