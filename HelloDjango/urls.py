@@ -19,5 +19,5 @@ from HelloDjango.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),path('hello/',hello),
-    path('',homepage),path('dick/vagina',vagina)
+    path('',homepage),path('news',news)
 ]
