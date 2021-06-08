@@ -5,6 +5,13 @@ import json
 from .utility import parse_date
 
 
+queryParamNames={
+    'title':'qInTitle=',
+    'body':'q=',
+    'key':'apiKey=',
+    'domain':'https://newsapi.org/v2/everything?'
+}
+
 def hello(request):
     return HttpResponse("<strong>Hello Django</strong>")
     
@@ -14,7 +21,8 @@ def homepage(request):
 def news(request):
     api_key='587ef66569534cc19dd19a5af6e14a58'
     search_query="America"
-    url="https://newsapi.org/v2/everything?q="+search_query+"&apiKey="+api_key
+    url=queryParamNames['domain']+queryParamNames['body']+search_query+'&'+queryParamNames['key']+api_key
+    #url="https://newsapi.org/v2/everything?q="+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
     json_obj['articles'].sort(reverse=True,key=lambda x:x["publishedAt"])
@@ -30,10 +38,8 @@ def news(request):
 def newsQ(request):
     api_key='587ef66569534cc19dd19a5af6e14a58'
     search_query=request.GET['q'].replace(' ','+')
-    print(request.GET['priority'])
     priority=request.GET['priority']+'='
-    domain_template="https://newsapi.org/v2/everything?"
-    url=domain_template+priority+search_query+"&apiKey="+api_key
+    url=queryParamNames['domain']+priority+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
     json_obj['articles'].sort(reverse=True,key=lambda x:x["publishedAt"])
