@@ -24,7 +24,6 @@ def news(request):
     search_query="America"
     priority='q='
     article_list=[]
-    i=0
     page=1
     while 1:
         url=queryParamNames['domain']+queryParamNames['body']+search_query+"&apiKey="+api_key+'&'+queryParamNames['page']+str(page)
@@ -47,10 +46,8 @@ def news(request):
     
 def newsQ(request):
     search_query=request.GET['q'].replace(' ',',')
-    priority=request.GET['priority']+'='
-    print(request.GET)
+    priority=(request.GET['priority'])+'='
     article_list=[]
-    i=0
     page=1
     while 1:
         url=queryParamNames['domain']+priority+search_query+"&apiKey="+api_key+'&'+queryParamNames['page']+str(page)
@@ -69,9 +66,6 @@ def newsQ(request):
     return render(
     request,'news.html',context
     )    
-            
-        
-        
         
 
     
