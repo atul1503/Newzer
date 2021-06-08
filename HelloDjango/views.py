@@ -22,9 +22,10 @@ def news(request):
     api_key='587ef66569534cc19dd19a5af6e14a58'
     search_query="America"
     url=queryParamNames['domain']+queryParamNames['body']+search_query+'&'+queryParamNames['key']+api_key
-    #url="https://newsapi.org/v2/everything?q="+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
+    if json_obj['status']=='error':
+        return HttpResponse('Errors are part of life.Dont be disheartened')
     json_obj['articles'].sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in json_obj['articles']:
         i["publishedAt"]=parse_date(i["publishedAt"])
@@ -42,6 +43,8 @@ def newsQ(request):
     url=queryParamNames['domain']+priority+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
+    if json_obj['status']=='error':
+        return HttpResponse('Errors are part of life.Dont be disheartened')
     json_obj['articles'].sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in json_obj['articles']:
         i["publishedAt"]=parse_date(i["publishedAt"])
