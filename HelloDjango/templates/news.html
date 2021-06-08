@@ -3,13 +3,17 @@
 <style>
 td{
 text-align:center;
-font-size:0.8em;
+font-size:0.55em;
 }
 </style>
 <body>
 {% if articles %}
-<center>
-<table border="2">
+<div id="Container">
+<form style="float:right" action="newsQ" method="get">
+<input type="text" name="tell">
+<input type="submit" value="Submit">
+</form>
+<table style="float:left" border="2" width=80%>
 <tr>
 <td>Publication date</td>
 <td>Photo</td>
@@ -24,8 +28,8 @@ font-size:0.8em;
 <td><a href="{{i.url}}">Click for full article</a></td>
 </tr>
 {% endfor %}
-</table> 
-</center>
+</table>
+</div> 
 {% else %}
 <center><p> No news right now </p></center>
 {% endif %}
