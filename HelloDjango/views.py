@@ -13,7 +13,7 @@ def homepage(request):
     
 def news(request):
     api_key='587ef66569534cc19dd19a5af6e14a58'
-    search_query='America'
+    search_query="America"
     url="https://newsapi.org/v2/everything?q="+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
@@ -29,8 +29,11 @@ def news(request):
     
 def newsQ(request):
     api_key='587ef66569534cc19dd19a5af6e14a58'
-    search_query=request.GET['tell'].replace(' ','+')
-    url="https://newsapi.org/v2/everything?q="+search_query+"&apiKey="+api_key
+    search_query=request.GET['q'].replace(' ','+')
+    print(request.GET['priority'])
+    priority=request.GET['priority']+'='
+    domain_template="https://newsapi.org/v2/everything?"
+    url=domain_template+priority+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
     json_obj['articles'].sort(reverse=True,key=lambda x:x["publishedAt"])
