@@ -46,8 +46,9 @@ def news(request):
     
     
 def newsQ(request):
-    search_query=request.GET['q'].replace(' ','+')
+    search_query=request.GET['q'].replace(' ',',')
     priority=request.GET['priority']+'='
+    print(request.GET)
     article_list=[]
     i=0
     page=1
