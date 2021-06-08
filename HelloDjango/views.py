@@ -30,7 +30,6 @@ def news(request):
 def newsQ(request):
     api_key='587ef66569534cc19dd19a5af6e14a58'
     search_query=request.GET['tell'].replace(' ','+')
-    print(search_query)
     url="https://newsapi.org/v2/everything?q="+search_query+"&apiKey="+api_key
     json_str=r.get(url).text
     json_obj=json.loads(json_str)
