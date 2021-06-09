@@ -14,6 +14,7 @@ queryParamNames={
 }
 api_key='587ef66569534cc19dd19a5af6e14a58'
 
+
 def hello(request):
     return HttpResponse("<strong>Hello Django</strong>")
     
