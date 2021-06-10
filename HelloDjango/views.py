@@ -74,6 +74,7 @@ def newsQ(request):
     
     '''
     q=request.GET
+    t=preference()
     article_list=[]
     run=1
     page=1
@@ -104,7 +105,8 @@ def newsQ(request):
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
     context={
-    'articles':article_list
+    'articles':article_list,
+    'form':t
     }
     return render(
     request,'news.html',context
