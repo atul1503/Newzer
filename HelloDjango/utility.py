@@ -21,3 +21,18 @@ def parse_date(date):
     hour,minute,sec=time.split(':')
     sec=sec[:-1]
     return day+'th'+' '+months[month]+' '+year+'  '+hour+':'+minute+':'+sec
+    
+def url_maker(domain,params):
+    '''
+    Generates url from domain and query parameters.
+    
+    domain :string: A string representing the url of the domain .Eg- https://www.google.com/?
+    params :list of lists: [parameter_name,parameter_value]
+    '''
+    s=domain
+    for i in range(len(params)):
+        if i==0:
+           s=s+str(params[i][0])+'='+str(params[i][1])
+        else:
+           s=s+'&'+str(params[i][0])+'='+str(params[i][1])
+    return s
