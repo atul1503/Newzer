@@ -1,9 +1,9 @@
-from django.db import models
+from django import forms
 
-class preference(models.Model):
-    body=models.CharField(default='Choksi',label='Search in article body',max_length=30)
-    title=models.CharField(default='',label='Search in article title',max_length=30)
-    max_articles=models.IntegerField(default=15,label='Number of Articles')
+class preference(forms.Form):
+    body=forms.CharField(label='Search in article body',initial='Choksi',max_length=30)
+    title=forms.CharField(label='Search in article title',initial='the',max_length=30)
+    max_articles=forms.IntegerField(label='Number of Articles',initial=10)
     
 
     

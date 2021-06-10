@@ -27,6 +27,9 @@ def news(request):
     intitialization page for /news
     '''
     q=preference()
+    q.max_articles=20
+    q.body='Bollywood'
+    q.title=''
     article_list=[]
     run=1
     page=1
@@ -57,7 +60,8 @@ def news(request):
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
     context={
-    'articles':article_list
+    'articles':article_list,
+    'form':q
     }
     return render(
     request,'news.html',context
@@ -69,18 +73,19 @@ def newsQ(request):
     page after query request 
     
     '''
+    q=request.GET
     article_list=[]
     run=1
     page=1
-    arts=q.max_articles
+    arts=int(q['max_articles'])
     while run: 
         url=url_maker(
         queryParamNames['domain'],
         [
-            ['q',q.body],
+            ['q',q['body']],
             ['page',page],
             ['apiKey',api_key],
-            ['qInTitle',q.title]
+            ['qInTitle',q['title']]
         ]
         )
         json_str=r.get(url).text
