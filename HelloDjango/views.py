@@ -69,18 +69,32 @@ def newsQ(request):
     page after query request 
     
     '''
-    search_query=request.GET['q'].replace(' ',',')
-    priority=(request.GET['priority'])+'='
     article_list=[]
+    run=1
     page=1
-    while 1:
-        url=queryParamNames['domain']+priority+search_query+"&apiKey="+api_key+'&'+queryParamNames['page']+str(page)
+    arts=q.max_articles
+    while run: 
+        url=url_maker(
+        queryParamNames['domain'],
+        [
+            ['q',q.body],
+            ['page',page],
+            ['apiKey',api_key],
+            ['qInTitle',q.title]
+        ]
+        )
         json_str=r.get(url).text
         json_obj=json.loads(json_str)
-        if json_obj['status']=='error' or page==2:
-            break
-        article_list=article_list+json_obj['articles']
+        i=0
+        while i<len(json_obj['articles']):
+            article_list.append(json_obj['articles'][i])
+            arts=arts-1
+            if arts<1:
+                run=0
+                break
+            i=i+1
         page=page+1
+                
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
@@ -90,6 +104,5 @@ def newsQ(request):
     return render(
     request,'news.html',context
     )    
-        
 
     
