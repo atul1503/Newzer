@@ -47,7 +47,7 @@ def news(request):
         json_str=r.get(url).text
         json_obj=json.loads(json_str)
         if json_obj['status']=='error':
-            return render(request,'news.html',{'articles':[]})
+            break
         i=0
         while i<len(json_obj['articles']):
             article_list.append(json_obj['articles'][i])
@@ -94,7 +94,7 @@ def newsQ(request):
         json_str=r.get(url).text
         json_obj=json.loads(json_str)
         if json_obj['status']=='error':
-            return render(request,'news.html',{'articles':[]})
+            break
         i=0
         while i<len(json_obj['articles']):
             article_list.append(json_obj['articles'][i])
