@@ -19,6 +19,7 @@ background-color:black;
 a
 {
 text-decoration:none;
+color:black;
 }
 #prev
 {
@@ -28,27 +29,50 @@ float:left;
 {
 float:right;
 }
+img
+{
+width:400px;
+height:200px;
+}
+#article_table td
+{
+font-size:0.75em;
+}
+#article_table td a:hover
+{
+color:red;
+}
+#next a:hover
+{
+color:orange;
+}
+#prev a:hover
+{
+color:orange;
+}
 </style>
 <body>
 <h1>The Headliner </h1>
 <div id="mainContainer">
 <div id="navpanel">
-<a href="general">General</a>
-<a href="business">Business</a>
-<a href="entertainment">Entertainment</a>
-<a href="health">Health</a>
-<a href="science">Science</a>
-<a href="sports">Sports</a>
-<a href="technology">Technology</a>
+<a href="top_headlines">General</a>
+<a href="top_headlines/business">Business</a>
+<a href="top_headlines/entertainment">Entertainment</a>
+<a href="top_headlines/health">Health</a>
+<a href="top_headlines/science">Science</a>
+<a href="top_headlines/sports">Sports</a>
+<a href="top_headlines/technology">Technology</a>
 </div>
 <hr><br><br>
 {% if articles %}
-<table id="article_table">
-{% for i in article %}
+<table border="1" id="article_table">
+{% for i in articles %}
 <tr>
-<td>{{article.title}}</td>
-<td>{{article.description}}</td>
-<td><a hre="{{article.url}}">Read more</a></td>
+<td><img src="{{i.urlToImage}}"></td>
+<td><a href="{{i.url}}">{{i.title}}</a></td>
+{% if i.description %}
+<td>{{i.description}}</td>
+{% endif %}
 </tr>
 {% endfor %}
 </table>
