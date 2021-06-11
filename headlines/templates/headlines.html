@@ -1,0 +1,66 @@
+<html>
+<title>
+The Headliner
+</title>
+<style>
+h1{
+font-family:Times;
+}
+#navpanel a
+{
+float:left;
+color:white;
+}
+#navpanel
+{
+height:100px;
+background-color:black;
+}
+a
+{
+text-decoration:none;
+}
+#prev
+{
+float:left;
+}
+#next
+{
+float:right;
+}
+</style>
+<body>
+<h1>The Headliner </h1>
+<div id="mainContainer">
+<div id="navpanel">
+<a href="general">General</a>
+<a href="business">Business</a>
+<a href="entertainment">Entertainment</a>
+<a href="health">Health</a>
+<a href="science">Science</a>
+<a href="sports">Sports</a>
+<a href="technology">Technology</a>
+</div>
+<hr><br><br>
+{% if articles %}
+<table id="article_table">
+{% for i in article %}
+<tr>
+<td>{{article.title}}</td>
+<td>{{article.description}}</td>
+<td><a hre="{{article.url}}">Read more</a></td>
+</tr>
+{% endfor %}
+</table>
+<div id="prev">
+<a href="general/prev/{{page}}">prev</a>
+</div>
+<div id="next">
+<a href="general/next/{{page}}">next</a>
+</div>
+{% else %}
+<p> No news for now </p>
+{% endif %}
+</div>
+</body>
+</html>
