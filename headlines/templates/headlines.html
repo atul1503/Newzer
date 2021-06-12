@@ -14,7 +14,7 @@ margin-left:5%;
 }
 #navpanel
 {
-height:100px;
+height:50px;
 background-color:black;
 }
 a
@@ -25,15 +25,16 @@ color:black;
 #prev
 {
 float:left;
+color:red;
 outline:none;
 border:none;
 }
 #next
 {
 float:right;
+color:red;
 outline:none;
 border:none;
-
 }
 img
 {
@@ -48,26 +49,26 @@ font-size:0.75em;
 {
 color:red;
 }
-#next a:hover
+#next input:hover
 {
 color:orange;
 }
-#prev a:hover
+#prev input:hover
 {
 color:orange;
 }
 </style>
 <body>
-<h1>The Headliner </h1>
+<center><h1>The Headliner </h1></center>
 <div id="mainContainer">
 <div id="navpanel">
 <a href="top_headlines">General</a>
-<a href="top_headlines/business">Business</a>
-<a href="top_headlines/entertainment">Entertainment</a>
-<a href="top_headlines/health">Health</a>
-<a href="top_headlines/science">Science</a>
-<a href="top_headlines/sports">Sports</a>
-<a href="top_headlines/technology">Technology</a>
+<a href="top_headlines?categ=business">Business</a>
+<a href="top_headlines?categ=entertainment">Entertainment</a>
+<a href="top_headlines?categ=health">Health</a>
+<a href="top_headlines?categ=science">Science</a>
+<a href="top_headlines?categ=sports">Sports</a>
+<a href="top_headlines?categ=technology">Technology</a>
 </div>
 <hr><br><br>
 {% if articles %}
@@ -82,9 +83,10 @@ color:orange;
 </tr>
 {% endfor %}
 </table>
+<br>
 <form method="get">
-<input type="submit" id="next" name="next" value="next">
-<input type="submit" id="prev" name="prev" value="prev">
+<input type="submit" id="next" name="next" value="Next page">
+<input type="submit" id="prev" name="prev" value="Previous page">
 <input type="hidden" name="pageno" value="{{page}}">
 </form>
 {% else %}

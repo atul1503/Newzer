@@ -4,5 +4,4 @@ from .views import *
 
 urlpatterns=[
     path('',general),# '' is /top_headlines/
-    
 ]

@@ -10,15 +10,14 @@ from HelloDjango.views import api_key
 
 def general(request):
     '''
-    Get initial News from general category.
+    Get top headlines.
     '''
-    if 'next' in request.GET:
-        return gen_next(request)
-    elif 'prev' in request.GET:
-        return gen_prev(request)
+    category=request.GET.get('categ',0)
+    if not category:
+        category='general'
     url=url_maker('https://newsapi.org/v2/top-headlines?',
     [
-     ['category','general'],
+     ['category',category],
      ['page',1],
      ['apiKey',api_key],
     ])
@@ -28,8 +27,11 @@ def general(request):
     
 def gen_prev(request):
     '''
-    general form back view
+    headlines form back view
     '''
+    category=request.GET.get('categ',0)
+    if not category:
+        category='general'
     page=int(request.GET.get('pageno'))
     url=url_maker('https://newsapi.org/v2/top-headlines?',
     [
@@ -43,9 +45,11 @@ def gen_prev(request):
     
 def gen_next(request):
     '''
-    general form front view
+    headlines form front view
     '''
-    print(request.GET)
+    category=request.GET.get('categ',0)
+    if not category:
+        category='general'
     page=int(request.GET.get('pageno'))
     url=url_maker('https://newsapi.org/v2/top-headlines?',
     [
