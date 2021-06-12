@@ -41,7 +41,7 @@ height:30px;
 <hr>
 {% if articles %}
 
-<form style="position:fixed;left:80%;top:31%" action="newsQ" method="get">
+<form style="position:fixed;left:80%;top:31%" method="get">
 {{form}}
 <input type='submit'>
 </form>
@@ -61,6 +61,7 @@ height:30px;
 <input type="submit" id="prev" name="prev" value="Previous page">
 <input type="submit" id="next" name="next" value="Next page">
 <input type="hidden" name="page" value="{{page}}">
+<input type="hidden" name="form" value="{{form}}">
 </form>
 </div> 
 {% else %}

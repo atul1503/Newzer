@@ -28,12 +28,13 @@ def news(request):
     '''
     if 'next' in request.GET:
         page=int(request.GET['page'])+1
+        q=preference(request.GET['form'])
     elif 'prev' in request.GET:
         page=int(request.GET['page'])-1
+        q=preference(request.GET['form'])
     else:
         page=1
     q=preference()
-    q.max_articles=20
     q.body='Bollywood'
     q.title=''
     article_list=[]
