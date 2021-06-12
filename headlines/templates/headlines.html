@@ -1,0 +1,90 @@
+<html>
+<title>
+The Headliner
+</title>
+<style>
+h1{
+font-family:Times;
+}
+#navpanel a
+{
+float:left;
+color:white;
+margin-left:5%;
+}
+#navpanel
+{
+height:100px;
+background-color:black;
+}
+a
+{
+text-decoration:none;
+color:black;
+}
+#prev
+{
+float:left;
+}
+#next
+{
+float:right;
+}
+img
+{
+width:400px;
+height:200px;
+}
+#article_table td
+{
+font-size:0.75em;
+}
+#article_table td a:hover
+{
+color:red;
+}
+#next a:hover
+{
+color:orange;
+}
+#prev a:hover
+{
+color:orange;
+}
+</style>
+<body>
+<h1>The Headliner </h1>
+<div id="mainContainer">
+<div id="navpanel">
+<a href="top_headlines">General</a>
+<a href="top_headlines/business">Business</a>
+<a href="top_headlines/entertainment">Entertainment</a>
+<a href="top_headlines/health">Health</a>
+<a href="top_headlines/science">Science</a>
+<a href="top_headlines/sports">Sports</a>
+<a href="top_headlines/technology">Technology</a>
+</div>
+<hr><br><br>
+{% if articles %}
+<table border="1" id="article_table">
+{% for i in articles %}
+<tr>
+<td><img src="{{i.urlToImage}}"></td>
+<td><a href="{{i.url}}">{{i.title}}</a></td>
+{% if i.description %}
+<td>{{i.description}}</td>
+{% endif %}
+</tr>
+{% endfor %}
+</table>
+<form method="get">
+<input type="submit" id="next" name="next" value="next">
+<input type="submit" id="prev" name="prev" value="prev">
+<input type="hidden" name="pageno" value="{{page}}">
+</form>
+{% else %}
+<p> No news for now </p>
+{% endif %}
+</div>
+</body>
+</html>
