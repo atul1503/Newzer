@@ -12,6 +12,10 @@ def general(request):
     '''
     Get initial News from general category.
     '''
+    if 'next' in request.GET:
+        return gen_next(request)
+    elif 'prev' in request.GET:
+        return gen_prev(request)
     url=url_maker('https://newsapi.org/v2/top-headlines?',
     [
      ['category','general'],
@@ -26,7 +30,7 @@ def gen_prev(request):
     '''
     general form back view
     '''
-    page=int(request.GET.get('page'))
+    page=int(request.GET.get('pageno'))
     url=url_maker('https://newsapi.org/v2/top-headlines?',
     [
      ['category','general'],
@@ -41,7 +45,8 @@ def gen_next(request):
     '''
     general form front view
     '''
-    page=int(request.GET.get('page'))
+    print(request.GET)
+    page=int(request.GET.get('pageno'))
     url=url_maker('https://newsapi.org/v2/top-headlines?',
     [
      ['category','general'],

@@ -10,6 +10,7 @@ font-family:Times;
 {
 float:left;
 color:white;
+margin-left:5%;
 }
 #navpanel
 {
@@ -76,12 +77,11 @@ color:orange;
 </tr>
 {% endfor %}
 </table>
-<div id="prev">
-<a href="top_headlines/general/prev?page={{page}}">prev</a>
-</div>
-<div id="next">
-<a href="top_headlines/general/next?page={{page}}">next</a>
-</div>
+<form method="get">
+<input type="submit" id="next" name="next" value="next">
+<input type="submit" id="prev" name="prev" value="prev">
+<input type="hidden" name="pageno" value="{{page}}">
+</form>
 {% else %}
 <p> No news for now </p>
 {% endif %}
