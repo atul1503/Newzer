@@ -10,6 +10,29 @@ form *
 {
 font-size:0.4em;
 }
+#prev
+{
+float:left;
+}
+#next
+{
+float:right;
+}
+#footerform
+{
+clear:left;
+}
+#prev:hover,#next:hover
+{
+color:orange;
+}
+#next,#prev
+{
+font-size:75%;
+color:white;
+background-color:black;
+height:30px;
+}
 </style>
 <body>
 <h1 style="text-align:center;font-family:Times"> The LightHouse </h1>
@@ -17,11 +40,13 @@ font-size:0.4em;
 <br>
 <hr>
 {% if articles %}
-<div id="Container">
+
 <form style="position:fixed;left:80%;top:31%" action="newsQ" method="get">
 {{form}}
 <input type='submit'>
 </form>
+
+<div id="Container">
 <table style="float:left" border="1" width=77%>
 {% for i in articles %}
 <tr>
@@ -32,6 +57,11 @@ font-size:0.4em;
 </tr>
 {% endfor %}
 </table>
+<form id="footerform" method="get">
+<input type="submit" id="prev" name="prev" value="Previous page">
+<input type="submit" id="next" name="next" value="Next page">
+<input type="hidden" name="page" value="{{page}}">
+</form>
 </div> 
 {% else %}
 <center><p> No news right now </p></center>
