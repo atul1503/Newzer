@@ -89,7 +89,6 @@ def nextPage(request):
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
-    request.session['pref']=jsonpickle.encode(pref)
     request.session['page']=page
     context={
     'articles':article_list,
@@ -99,10 +98,11 @@ def nextPage(request):
     
     
 def prevPage(request):
-    pref=jsonpickle.decode(request.session['pref'])
+    q=jsonpickle.decode(request.session['pref'])
+    pref=preference(q)
     page=int(request.session['page'])-1
     article_list=[]
-    q=request.session['pref']
+    
     url=url_maker(queryParamNames['domain'],
     [
         ['q',q.get('body')],
@@ -118,7 +118,6 @@ def prevPage(request):
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
-    request.session['pref']=jsonpickle.encode(pref)
     request.session['page']=page
     context={
     'articles':article_list,
