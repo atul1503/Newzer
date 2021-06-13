@@ -1,10 +1,13 @@
 <html>
 <title>News for ya!</title>
 <style>
+*
+{
+box-sizing:border-box;
+}
 td{
-text-align:center;
-font-size:0.65em;
 font-family:Times;
+width:10px;
 }
 form *
 {
@@ -41,6 +44,15 @@ a:hover
 {
 color:#f10c45;
 }
+table
+{
+float:left;
+border: 30px solid blue;
+}
+img
+{
+width:400px;
+}
 </style>
 <body>
 <h1 style="text-align:center;font-family:Times"> The LightHouse </h1>
@@ -55,10 +67,10 @@ color:#f10c45;
 </form>
 
 <div id="Container">
-<table style="float:left" border="1" width=77%>
+<table border="1">
 {% for i in articles %}
 <tr>
-<td><img style="height:15em;width:30em" src="{{i.urlToImage}}"></td>
+<td><img src="{{i.urlToImage}}"></td>
 <td><a href="{{i.url}}">{{i.title}}</a></td>
 <td>{{i.description}}</td>
 </tr>
