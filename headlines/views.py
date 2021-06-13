@@ -25,11 +25,14 @@ def general(request):
      ['page',1],
      ['apiKey',api_key],
     ])
-    request.session['pref']=request.GET
+    if not request.GET:
+        request.session['pref']={'categ':'general'}
+    else:
+        request.session['pref']=request.GET
     request.session['page']=1
     r=requests.get(url)
     obj=json.loads(r.text)
-    return render(request,'headlines.html',{'articles':obj['articles'],'page':1})
+    return render(request,'headlines.html',{'articles':obj['articles']})
     
 def gen_prev(request):
     '''
@@ -48,7 +51,7 @@ def gen_prev(request):
     r=requests.get(url)
     obj=json.loads(r.text)
     request.session['page']=page
-    return render(request,'headlines.html',{'articles':obj['articles'],'page':page-1})
+    return render(request,'headlines.html',{'articles':obj['articles']})
     
 def gen_next(request):
     '''
@@ -67,7 +70,7 @@ def gen_next(request):
     r=requests.get(url)
     obj=json.loads(r.text)
     request.session['page']=page
-    return render(request,'headlines.html',{'articles':obj['articles'],'page':page+1})
+    return render(request,'headlines.html',{'articles':obj['articles']})
     
     
     
