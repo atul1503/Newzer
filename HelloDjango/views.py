@@ -88,11 +88,12 @@ def newsQ(request):
 def prefReq(request):
     pref=preference(request.GET)
     page=1
+    q=request.GET
     article_list=[]
     url=url_maker(queryParamNames['domain'],
     [
-        ['q',pref.body],
-        ['qInTitle',pref.title],
+        ['q',q.get('body')],
+        ['qInTitle',q.get('title')],
         ['page',page],
         ['apiKey',api_key]
     ])
@@ -104,22 +105,24 @@ def prefReq(request):
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
-    request.session['pref']=pref
+    request.session['pref']=jsonpickle.encode(pref)
     request.session['page']=page
     context={
+    'articles':article_list,
     'form':pref
     }
     return render(request,'news.html',context)
 
 
 def nextPage(request):
-    pref=request.session['pref']
+    pref=jsonpickle.decode(request.session['pref'])
     page=int(request.session['page'])+1
     article_list=[]
+    q=request.GET
     url=url_maker(queryParamNames['domain'],
     [
-        ['q',pref.body],
-        ['qInTitle',pref.title],
+       ['q',q.get('body')],
+        ['qInTitle',q.get('title')],
         ['page',page],
         ['apiKey',api_key]
     ])
@@ -131,22 +134,24 @@ def nextPage(request):
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
-    request.session['pref']=pref
+    request.session['pref']=jsonpickle.encode(pref)
     request.session['page']=page
     context={
+    'articles':article_list,
     'form':pref
     }
     return render(request,'news.html',context)
     
     
 def prevPage(request):
-    pref=request.session['pref']
+    pref=jsonpickle.decode(request.session['pref'])
     page=int(request.session['page'])-1
     article_list=[]
+    q=request.GET
     url=url_maker(queryParamNames['domain'],
     [
-        ['q',pref.body],
-        ['qInTitle',pref.title],
+        ['q',q.get('body')],
+        ['qInTitle',q.get('title')],
         ['page',page],
         ['apiKey',api_key]
     ])
@@ -158,9 +163,10 @@ def prevPage(request):
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
-    request.session['pref']=pref
+    request.session['pref']=jsonpickle.encode(pref)
     request.session['page']=page
     context={
+    'articles':article_list,
     'form':pref
     }
     return render(request,'news.html',context)
@@ -168,6 +174,8 @@ def prevPage(request):
     
 def initRequest(request):
     pref=preference()
+    pref.body="Bollywood"
+    pref.title=""
     page=1
     article_list=[]
     url=url_maker(queryParamNames['domain'],
