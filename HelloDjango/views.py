@@ -23,52 +23,6 @@ def hello(request):
 def homepage(request):
     return HttpResponse("<center>Welcome to my first django project</center>")
     
-def news(request):
-    '''
-    intitialization page for /news
-    '''
-    t=request.GET
-    if 'next' in request.GET:
-        page=int(request.GET['page'])+1
-        q=preference(request.GET['form'])
-    elif 'prev' in request.GET:
-        page=int(request.GET['page'])-1
-        q=preference(request.GET['form'])
-    elif 'body' in request.GET:
-        q=preference(t)
-        page=1
-    else:
-        page=1
-    q=preference()
-    q.body='Bollywood'
-    q.title=''
-    article_list=[]
-    url=url_maker(
-        queryParamNames['domain'],
-        [
-            ['q',q.body],
-            ['page',page],
-            ['apiKey',api_key],
-            ['qInTitle',q.title]
-        ]
-    )
-    json_str=r.get(url).text
-    json_obj=json.loads(json_str)
-    if json_obj['status']=='error':
-        return render(request,'news.html',{})
-    article_list=article_list+json_obj['articles']
-    article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
-    for i in article_list:
-        i["publishedAt"]=parse_date(i["publishedAt"])
-    context={
-    'articles':article_list,
-    'form':q,
-    'page':page,
-    'pref':t
-    }
-    return render(
-    request,'news.html',context
-    )
     
     
 def newsQ(request):
