@@ -33,6 +33,14 @@ color:white;
 background-color:black;
 height:30px;
 }
+a
+{
+text-decoration:none;
+}
+a:hover
+{
+color:#f10c45;
+}
 </style>
 <body>
 <h1 style="text-align:center;font-family:Times"> The LightHouse </h1>
@@ -50,10 +58,9 @@ height:30px;
 <table style="float:left" border="1" width=77%>
 {% for i in articles %}
 <tr>
-<td>{{i.publishedAt}}</td>
 <td><img style="height:15em;width:30em" src="{{i.urlToImage}}"></td>
-<td>{{i.title}}</td>
-<td><a style="text-decoration:none" href="{{i.url}}">Read More</a></td>
+<td><a href="{{i.url}}">{{i.title}}</a></td>
+<td>{{i.description}}</td>
 </tr>
 {% endfor %}
 </table>
