@@ -19,7 +19,6 @@ from HelloDjango.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),path('hello/',hello),
-    path('',homepage),path('news',news),
-    re_path('newsQ/?.*',newsQ),
+    path('',homepage),path('news',newsQ),
     path('top_headlines',include('headlines.urls'))
 ]

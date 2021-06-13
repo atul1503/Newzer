@@ -2,6 +2,7 @@ from django.http import HttpResponse
 import requests as r
 from django.shortcuts import render
 import json
+import jsonpickle
 from .utility import parse_date,url_maker
 from .models import preference
 
@@ -26,19 +27,22 @@ def news(request):
     '''
     intitialization page for /news
     '''
+    t=request.GET
     if 'next' in request.GET:
         page=int(request.GET['page'])+1
         q=preference(request.GET['form'])
     elif 'prev' in request.GET:
         page=int(request.GET['page'])-1
         q=preference(request.GET['form'])
+    elif 'body' in request.GET:
+        q=preference(t)
+        page=1
     else:
         page=1
     q=preference()
     q.body='Bollywood'
     q.title=''
     article_list=[]
-    run=1
     url=url_maker(
         queryParamNames['domain'],
         [
@@ -59,7 +63,8 @@ def news(request):
     context={
     'articles':article_list,
     'form':q,
-    'page':page
+    'page':page,
+    'pref':t
     }
     return render(
     request,'news.html',context
@@ -71,45 +76,119 @@ def newsQ(request):
     page after query request 
     
     '''
-    q=request.GET
-    t=preference()
-    article_list=[]
-    run=1
+    if 'body' in request.GET:
+        return prefReq(request)
+    elif 'next' in request.GET:
+        return nextPage(request)
+    elif 'prev' in request.GET:
+        return prevPage(request)
+    else:
+        return initRequest(request)
+        
+def prefReq(request):
+    pref=preference(request.GET)
     page=1
-    arts=int(q['max_articles'])
-    while run: 
-        url=url_maker(
-        queryParamNames['domain'],
-        [
-            ['q',q['body']],
-            ['page',page],
-            ['apiKey',api_key],
-            ['qInTitle',q['title']]
-        ]
-        )
-        json_str=r.get(url).text
-        json_obj=json.loads(json_str)
-        if json_obj['status']=='error':
-            break
-        i=0
-        while i<len(json_obj['articles']):
-            article_list.append(json_obj['articles'][i])
-            arts=arts-1
-            if arts<1:
-                run=0
-                break
-            i=i+1
-        page=page+1
-                
+    article_list=[]
+    url=url_maker(queryParamNames['domain'],
+    [
+        ['q',pref.body],
+        ['qInTitle',pref.title],
+        ['page',page],
+        ['apiKey',api_key]
+    ])
+    json_str=r.get(url).text
+    json_obj=json.loads(json_str)
+    if json_obj['status']=='error':
+        return render(request,'news.html',{})
+    article_list=article_list+json_obj['articles']
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
+    request.session['pref']=pref
+    request.session['page']=page
+    context={
+    'form':pref
+    }
+    return render(request,'news.html',context)
+
+
+def nextPage(request):
+    pref=request.session['pref']
+    page=int(request.session['page'])+1
+    article_list=[]
+    url=url_maker(queryParamNames['domain'],
+    [
+        ['q',pref.body],
+        ['qInTitle',pref.title],
+        ['page',page],
+        ['apiKey',api_key]
+    ])
+    json_str=r.get(url).text
+    json_obj=json.loads(json_str)
+    if json_obj['status']=='error':
+        return render(request,'news.html',{})
+    article_list=article_list+json_obj['articles']
+    article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
+    for i in article_list:
+        i["publishedAt"]=parse_date(i["publishedAt"])
+    request.session['pref']=pref
+    request.session['page']=page
+    context={
+    'form':pref
+    }
+    return render(request,'news.html',context)
+    
+    
+def prevPage(request):
+    pref=request.session['pref']
+    page=int(request.session['page'])-1
+    article_list=[]
+    url=url_maker(queryParamNames['domain'],
+    [
+        ['q',pref.body],
+        ['qInTitle',pref.title],
+        ['page',page],
+        ['apiKey',api_key]
+    ])
+    json_str=r.get(url).text
+    json_obj=json.loads(json_str)
+    if json_obj['status']=='error':
+        return render(request,'news.html',{})
+    article_list=article_list+json_obj['articles']
+    article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
+    for i in article_list:
+        i["publishedAt"]=parse_date(i["publishedAt"])
+    request.session['pref']=pref
+    request.session['page']=page
+    context={
+    'form':pref
+    }
+    return render(request,'news.html',context)
+    
+    
+def initRequest(request):
+    pref=preference()
+    page=1
+    article_list=[]
+    url=url_maker(queryParamNames['domain'],
+    [
+        ['q',pref.body],
+        ['qInTitle',pref.title],
+        ['page',page],
+        ['apiKey',api_key]
+    ])
+    json_str=r.get(url).text
+    json_obj=json.loads(json_str)
+    if json_obj['status']=='error':
+        return render(request,'news.html',{})
+    article_list=article_list+json_obj['articles']
+    article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
+    for i in article_list:
+        i["publishedAt"]=parse_date(i["publishedAt"])
+    request.session['pref']=jsonpickle.encode(pref)
+    request.session['page']=page
     context={
     'articles':article_list,
-    'form':t
+    'form':pref
     }
-    return render(
-    request,'news.html',context
-    )    
-
-    
+    return render(request,'news.html',context)
