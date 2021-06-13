@@ -59,7 +59,7 @@ def prefReq(request):
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
-    request.session['pref']=jsonpickle.encode(pref)
+    request.session['pref']=jsonpickle.encode(q)
     request.session['page']=page
     context={
     'articles':article_list,
@@ -69,10 +69,11 @@ def prefReq(request):
 
 
 def nextPage(request):
-    pref=jsonpickle.decode(request.session['pref'])
+    query=jsonpickle.decode(request.session['pref'])
+    pref=preference(query)
     page=int(request.session['page'])+1
     article_list=[]
-    q=request.GET
+    q=query
     url=url_maker(queryParamNames['domain'],
     [
        ['q',q.get('body')],
@@ -101,7 +102,7 @@ def prevPage(request):
     pref=jsonpickle.decode(request.session['pref'])
     page=int(request.session['page'])-1
     article_list=[]
-    q=request.GET
+    q=request.session['pref']
     url=url_maker(queryParamNames['domain'],
     [
         ['q',q.get('body')],
@@ -147,7 +148,7 @@ def initRequest(request):
     article_list.sort(reverse=True,key=lambda x:x["publishedAt"])
     for i in article_list:
         i["publishedAt"]=parse_date(i["publishedAt"])
-    request.session['pref']=jsonpickle.encode(pref)
+    request.session['pref']=jsonpickle.encode({'body':'Bollywood','title':''})
     request.session['page']=page
     context={
     'articles':article_list,
