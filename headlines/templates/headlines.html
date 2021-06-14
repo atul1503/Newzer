@@ -1,8 +1,8 @@
 <html>
-<title>
+    <title>
 The Headliner
-</title>
-<style>
+    </title>
+    <style>
 h1{
 font-family:Times;
 }
@@ -59,40 +59,40 @@ color:orange;
 {
 color:orange;
 }
-</style>
-<body>
-<center><h1>The Headliner </h1></center>
-<div id="mainContainer">
-<div id="navpanel">
-<a href="top_headlines">General</a>
-<a href="top_headlines?categ=business">Business</a>
-<a href="top_headlines?categ=entertainment">Entertainment</a>
-<a href="top_headlines?categ=health">Health</a>
-<a href="top_headlines?categ=science">Science</a>
-<a href="top_headlines?categ=sports">Sports</a>
-<a href="top_headlines?categ=technology">Technology</a>
-</div>
-<hr><br><br>
+    </style>
+    <body>
+        <center><h1>The Headliner </h1></center>
+        <div id="mainContainer">
+            <div id="navpanel">
+                <a href="top_headlines">General</a>
+                <a href="top_headlines?categ=business">Business</a>
+                <a href="top_headlines?categ=entertainment">Entertainment</a>
+                <a href="top_headlines?categ=health">Health</a>
+                <a href="top_headlines?categ=science">Science</a>
+                <a href="top_headlines?categ=sports">Sports</a>
+                <a href="top_headlines?categ=technology">Technology</a>
+            </div>
+            <hr><br><br>
 {% if articles %}
-<table border="1" id="article_table">
+                        <table border="1" id="article_table">
 {% for i in articles %}
-<tr>
-<td><img src="{{i.urlToImage}}"></td>
-<td><a href="{{i.url}}">{{i.title}}</a></td>
+                            <tr>
+                                <td><img src="{{i.urlToImage}}"></td>
+                                    <td><a href="{{i.url}}">{{i.title}}</a></td>
 {% if i.description %}
-<td>{{i.description}}</td>
+                                    <td>{{i.description}}</td>
 {% endif %}
-</tr>
+                                </tr>
 {% endfor %}
-</table>
-<br>
-<form method="get">
-<input type="submit" id="next" name="next" value="Next page">
-<input type="submit" id="prev" name="prev" value="Previous page">
-</form>
+                            </table>
+                            <br>
+                                <form method="get">
+                                    <input type="submit" id="next" name="next" value="Next page">
+                                        <input type="submit" id="prev" name="prev" value="Previous page">
+                                        </form>
 {% else %}
-<p> No news for now </p>
+                                        <p> No news for now </p>
 {% endif %}
-</div>
-</body>
-</html>
+                                    </div>
+                                </body>
+                            </html>

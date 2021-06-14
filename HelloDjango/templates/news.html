@@ -1,88 +1,78 @@
 <html>
-<title>News for ya!</title>
-<style>
-*
-{
-box-sizing:border-box;
-}
-td{
-font-family:Times;
-width:10px;
-}
-form *
-{
-font-size:0.4em;
-}
-#prev
-{
-float:left;
-}
-#next
-{
-float:right;
-}
-#footerform
-{
-clear:left;
-}
-#prev:hover,#next:hover
-{
-color:orange;
-}
-#next,#prev
-{
-font-size:75%;
-color:white;
-background-color:black;
-height:30px;
-}
-a
-{
-text-decoration:none;
-}
-a:hover
-{
-color:#f10c45;
-}
-table
-{
-float:left;
-border: 30px solid blue;
-}
-img
-{
-width:400px;
-}
-</style>
-<body>
-<h1 style="text-align:center;font-family:Times"> The LightHouse </h1>
-<p style="text-align:right;font-size:0.8em">- Third Eye of the world</p>
-<br>
-<hr>
-{% if articles %}
-
-<form style="position:fixed;left:80%;top:31%" method="get">
-{{form}}
-<input type='submit'>
-</form>
-
-<div id="Container">
-<table border="1">
-{% for i in articles %}
-<tr>
-<td><img src="{{i.urlToImage}}"></td>
-<td><a href="{{i.url}}">{{i.title}}</a></td>
-<td>{{i.description}}</td>
-</tr>
-{% endfor %}
-</table>
-<form id="footerform" method="get">
-<input type="submit" id="prev" name="prev" value="Previous page">
-<input type="submit" id="next" name="next" value="Next page">
-</form>
-</div> 
-{% else %}
-<center><p> No news right now </p></center>
-{% endif %}
-</body>
+    <title>The Lighthouse</title>
+    <style>
+        a
+        {
+            text-decoration:none;
+            color:green;
+        }
+        #title-footer
+        {
+            float:right;
+            font-style:Times;
+        }
+        img
+        {
+            width:400px;
+            height:200px;
+        }
+        .column
+        {
+            max-width:200px;
+            font-size:0.5em;
+        }
+        #next,#prev
+        {
+            height:30px;
+            width:100px;
+            text-align:center;
+            color:white;
+            background-color:black;
+        }
+        #next:hover,#prev:hover
+        {
+            color:orange;
+        }
+        #next
+        {
+            float:right;
+        }
+        #prev
+        {
+            float:left;
+        }
+        #pref-form
+        {
+            position:fixed;
+            top:35%;
+            right:0%;
+            font-size:0.36em;
+        }   
+    </style>
+    <center><h1>The Lighthouse</h1></center>
+    <body>
+    <div id="title-footer">- Let The Light eat off the Dark</div>
+    {% if articles %}
+    <hr><br><br>
+    <table border="1">
+        {% for i in articles %}
+        <tr>
+            <td><img src="{{i.urlToImage}}"></td>
+            <td class="column"><a href="{{i.url}}">{{i.title}}</td>
+            <td class="column">{{i.description}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <form id="pref-form" method="get">
+    {{form.as_p}}
+    <input type="submit">
+    </form>
+    <form method="get">
+        <input type="submit" id="next" name="next" value="Next page">
+        <input type="submit" id="prev" name="prev" value="Previous page">
+    </form>
+    {% else %}
+        <center><p>No news for now.</p></center>
+    {% endif %}
+    </body>
 </html>
