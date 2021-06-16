@@ -14,7 +14,7 @@ queryParamNames={
     'domain':'https://newsapi.org/v2/everything?',
     'page':'page'
 }
-api_key='587ef66569534cc19dd19a5af6e14a58'
+api_key='YOUR API KEY'
 
 
 def hello(request):
