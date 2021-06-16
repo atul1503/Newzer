@@ -16,8 +16,13 @@ After filling the form and clicking on submit it shows you the news about that q
 
 /top_headlines
 -----------------
-Displays the latest headlines.You can choose from the categories whether it be health,entertainment or sports etc.
+A Django app that displays the latest headlines.You can choose from the categories whether it be health,entertainment or sports etc.
 
 Database used
 --------------
 There is no database required for this type of application however to help the user navigate between pages SQLLite3 has been used that stores the sessions of the users.
+
+
+Tests
+-------
+The website has passed through nicely written tests that guarantee the correct functioning of the website.
